@@ -1,4 +1,4 @@
-.PHONY: all deps osxkeychain secretservice test validate wincred pass deb
+.PHONY: all deps osxkeychain secretservice test validate wincred pass deb envvarauth
 
 TRAVIS_OS_NAME ?= linux
 VERSION := $(shell grep 'const Version' credentials/version.go | awk -F'"' '{ print $$2 }')
@@ -11,6 +11,10 @@ deps:
 clean:
 	rm -rf bin
 	rm -rf release
+
+envvarauth:
+	mkdir -p bin
+	go build -ldflags -s -o bin/docker-credential-envvarauth envvarauth/cmd/main.go
 
 osxkeychain:
 	mkdir -p bin
